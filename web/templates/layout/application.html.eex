@@ -8,6 +8,7 @@
     <meta name="author" content="Erick Navarro">
 
     <title>Hello Phoenix!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
 </head>
 
