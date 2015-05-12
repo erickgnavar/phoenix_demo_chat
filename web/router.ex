@@ -18,6 +18,10 @@ defmodule DemoChat.Router do
     get "/", PageController, :index
   end
 
+  socket "/ws", DemoChat do
+    channel "rooms:*", RoomChannel
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", DemoChat do
   #   pipe_through :api
