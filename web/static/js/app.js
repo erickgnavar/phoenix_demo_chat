@@ -9,9 +9,6 @@ let socket = new Socket('/ws')
 socket.connect()
 
 socket.join('rooms:lobby', {}).receive('ok', channel => {
-    channel.push('new_message', {
-        message: 'hello there'
-    })
     channel.on('new_message', payload => {
         var li = document.createElement('li')
         li.className = 'list-group-item'
