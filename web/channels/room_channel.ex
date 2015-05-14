@@ -3,7 +3,7 @@ defmodule DemoChat.RoomChannel do
   alias DemoChat.Repo
   alias DemoChat.Message
 
-  def join("rooms:lobby", auth, socket) do
+  def join("rooms:lobby", _, socket) do
     {:ok, socket}
   end
 
