@@ -8,31 +8,34 @@ let socket = new Socket('/ws')
 
 socket.connect()
 
-socket.join('rooms:lobby', {}).receive('ok', channel => {
-    channel.on('new_message', payload => {
-        var li = document.createElement('li')
-        li.className = 'list-group-item'
-        li.innerHTML = payload.message
-        if (chatBox.children.length) {
-            chatBox.insertBefore(li, chatBox.firstChild)
-        } else {
-            chatBox.appendChild(li)
-        }
-        messageBox.value = ''
-    })
+let chan = socket.chan('rooms:lobby', {})
 
-    messageForm.addEventListener('submit', event => {
-        event.preventDefault();
-        channel.push('new_message', {
-            message: messageBox.value
-        })
-
-        messageBox.value = ''
-        messageBox.scrollTop = messageBox.scrollHeight
-    })
+chan.on('new_message', payload => {
+    var li = document.createElement('li')
+    li.className = 'list-group-item'
+    li.innerHTML = payload.message
+    if (chatBox.children.length) {
+        chatBox.insertBefore(li, chatBox.firstChild)
+    } else {
+        chatBox.appendChild(li)
+    }
+    messageBox.value = ''
 })
 
+messageForm.addEventListener('submit', event => {
+    event.preventDefault();
 
+    chan.push('new_message', {
+        message: messageBox.value
+    })
+
+    messageBox.value = ''
+    messageBox.scrollTop = messageBox.scrollHeight
+})
+
+chan.join().receive('ok', chan => {
+    console.log('Welcome to Phoenix Chat!')
+})
 
 let App = {
 }

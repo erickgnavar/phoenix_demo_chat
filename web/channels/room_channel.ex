@@ -7,6 +7,10 @@ defmodule DemoChat.RoomChannel do
     {:ok, socket}
   end
 
+  def join("rooms:" <> _private_room_id, _auth_msg, socket) do
+    {:error, %{reason: "unauthorized"}}
+  end
+
   def handle_in("new_message", %{"message" => message}, socket) do
     changeset = Message.changeset(%Message{}, %{body: message})
     Repo.insert(changeset)
